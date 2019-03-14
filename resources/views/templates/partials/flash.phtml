@@ -1,0 +1,11 @@
+<?php if($flash->getMessage('info')): ?>
+	<div class="alert alert-info">
+		<?=$flash->getMessage('info')[0]?>
+	</div>
+<?php endif; ?>
+
+<?php if($flash->getMessage('error')): ?>
+	<div class="alert alert-danger">
+		<?=$flash->getMessage('error')[0]?>
+	</div>
+<?php endif; ?>

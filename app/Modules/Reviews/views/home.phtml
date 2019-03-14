@@ -1,0 +1,92 @@
+<?
+
+$key = $data->app->f->currentModule( __DIR__ );
+$module = $data->app->mm->get()[$key];
+$model = $module['model'];
+$moduleName = strtolower($module['config']->name);
+$coreui = $data->app->path['root'] . $data->app->path['view'] . 'admin/coreui/';
+
+?>
+
+
+<?php require $data->app->path['view'] . 'admin/templates/partials/header.phtml' ?>
+
+
+<div class="app-body">
+
+  <?php require $data->app->path['view'] . 'admin/templates/partials/sidebar.phtml' ?>
+
+  <main class="main">
+
+    <?=$data->app->breadcrumbs->get([
+      'left' => [
+        'Главная' => $data->app->router->pathFor('admin.home'),
+        $model::getName()[1] => ''
+      ],
+      'right' => [
+        'Настройки' => $data->app->router->pathFor('admin.'.$moduleName.'.settings')
+      ]
+    ])?>   
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="animated fadeIn">
+
+            <table id="dataTables" class="ui celled table">
+              <thead>
+                <tr>
+                  <th>№</th>
+                  <th>Картинка</th>
+                  <th>Имя</th>
+                  <th>Должность</th>
+                  <th>Действие</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                  $rows;
+            
+                  foreach ($model::all() as $value) {
+                    $href = $data->app->router->pathFor('admin.'.$moduleName.'.edit', ['id' => $value->id]);
+                    $controls = $data->app->AdminBuilder->controls(['edit' => $url, 'delete' => $value->id]);
+
+                    $format = '
+                      <tr>
+                        <td>%1$s</td>
+                        <td><a href="%2$s">%3$s</a></td>
+                        <td>%4$s</td>
+                        <td>%5$s</td>
+                        <td>%6$s</td>
+                      </tr>';
+                    $rows .= sprintf($format, $value->id, $href, $value->img, $value->name, $value->post, $controls);
+                  }
+            
+                  echo $rows;
+                ?>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+
+    <div class="container-fluid mt-4">
+      <div class="row justify-content-md-end justify-content-center">
+        <div class="col-1">
+          <a href="<?=$data->app->router->pathFor('admin.'.$moduleName.'.add')?>" class="btn btn-primary mr-2">
+            <i class="fa fa-plus"></i> Добавить</a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+    
+<?php require $data->app->path['view'] . 'admin/templates/modals/delete.phtml' ?>
+<?php require $data->app->path['view'] . 'admin/templates/partials/footer.phtml' ?>

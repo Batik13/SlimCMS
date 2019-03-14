@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">      
+    <title>Slim 3 - Admin Panel</title>
+
+
+    <!-- Icons-->
+    <link href="<?=$coreui?>vendors/@coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
+    <link href="<?=$coreui?>vendors/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
+    <link href="<?=$coreui?>vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?=$coreui?>vendors/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
+
+    <!-- Main styles for this application-->
+    <link href="<?=$coreui?>css/style.css" rel="stylesheet">
+    <link href="<?=$coreui?>vendors/pace-progress/css/pace.min.css" rel="stylesheet">
+    <link href="<?=$coreui?>vendors/jquery/css/jquery-ui.css" rel="stylesheet">
+
+
+
+    <?
+      // Plugins sltyle required by this view
+      echo $data->app->plugin->addCss();
+    ?>
+
+    <script src="<?=$coreui?>vendors/jquery/js/jquery.min.js"></script>
+    <script src="<?=$coreui?>vendors/jquery/js/jquery-ui.js"></script>
+    <script>
+      /**
+       * vars - модуль, который хранит состояние любого переданного объекта
+       */
+      var vars = (function(){
+        var obj = [];
+
+        function set(key, context) {
+          obj[key] = context;
+        }
+
+        function get(key) {
+          return obj[key];
+        }
+
+        return {
+          set: set,
+          get: get,
+        }
+      })();
+    </script>
+  </head>
+
+  <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+
+    <header class="app-header navbar">
+      <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+
+
+      <a class="navbar-brand" href="<?=$data->app->router->pathFor('admin.home')?>">
+        <span class="navbar-brand-full">Slim 3 - Admin Panel</span>
+      </a>
+      <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <ul class="nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="<?=$data->app->router->pathFor('admin.settings')?>"><i class="icons font-2xl d-block cui-settings"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?=$data->app->router->pathFor('auth.signout')?>"><i class="icon-logout font-2xl icons d-block"></i></a>
+        </li>
+      </ul>
+    </header>

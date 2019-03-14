@@ -1,0 +1,28 @@
+<?
+  use App\Modules\ModuleManager;
+  $mm = new ModuleManager();
+?>
+
+<div class="sidebar">
+  <nav class="sidebar-nav">
+    <ul class="nav">
+      <?
+        $sb_items;
+        $sb_format = '<li class="nav-item"><a class="nav-link" href="%1$s"><i class="%2$s"></i> %3$s</a></li>';
+
+        foreach ($mm->get() as $value) {
+          if ($value['config']->publish) {
+            $url = $data->app->router->pathFor('admin.' . strtolower($value['dirName']));
+            $icon = $value['config']->icon;
+            $name = $value['model']::getName()[1];
+
+            $sb_items .= sprintf($sb_format, $url, $icon, $name);
+          }
+        }
+
+        echo $sb_items;
+      ?>
+    </ul>
+  </nav>
+  <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+</div>

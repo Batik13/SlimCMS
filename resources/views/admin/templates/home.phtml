@@ -1,0 +1,61 @@
+<?php
+
+use App\Modules\Shorts\Models\Short;
+$coreui = $data->app->path['root'] . $data->app->path['view'] . 'admin/coreui/';
+
+?>
+
+
+<?php require $data->app->path['view'] . 'admin/templates/partials/header.phtml' ?>
+
+
+<div class="app-body">
+
+  <?php require $data->app->path['view'] . 'admin/templates/partials/sidebar.phtml' ?>
+
+  <main class="main">
+
+    <?=$data->app->breadcrumbs->get([
+      'left' => [
+        'Главная' => ''
+      ]      
+    ])?>
+
+    <div class="container-fluid">
+      <div class="animated fadeIn">
+        <div class="row">
+
+          <?
+            $result;
+            foreach (Short::where('art', '!=', '')->distinct()->get(['art']) as $value) {
+
+              $items = '<nav class="nav flex-column">';
+              foreach (Short::where('art', '=', $value['art'])->get() as $value2) {
+                $url = $data->app->router->pathFor('admin.short.edit', ['id' => $value2->id]);
+                $items .= '<a class="nav-link active" href="'. $url .'">'. $value2->name .'</a>';
+              }
+              $items .= '</nav>';
+
+              $result .= '
+                <div class="col-sm-6 col-md-4">
+                  <div class="card">
+                    <div class="card-header">'. $value['art'] .'</div>
+                    <div class="card-body">'. $items .'</div>
+                  </div>
+                </div>
+              ';
+            }
+
+            echo $result;
+
+          ?>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+    
+    
+<?php require $data->app->path['view'] . 'admin/templates/partials/footer.phtml' ?>

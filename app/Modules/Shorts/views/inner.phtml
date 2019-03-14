@@ -1,0 +1,150 @@
+<?
+$key = $data->app->f->currentModule( __DIR__ );
+$module = $data->app->mm->get()[$key];
+$model = $module['model'];
+$moduleName = strtolower($module['config']->name);
+$coreui = $data->app->path['root'] . $data->app->path['view'] . 'admin/coreui/';
+
+
+
+$errors = (object) $errors;
+list($mode, $id) = $data->app->f->getMode($data->request);
+
+$element = $data->app->element;
+if ($id) {
+  $element = $model::find($id);
+}
+
+if (!empty($old)) {
+  $old = (object) $old;
+
+  $element->name = $old->name;
+  $element->text = $old->text;
+  $element->art = $old->art;
+}
+
+?>
+
+
+<? require $data->app->path['view'] . 'admin/templates/partials/header.phtml' ?>
+
+
+<div class="app-body">
+
+  <? require $data->app->path['view'] . 'admin/templates/partials/sidebar.phtml' ?>
+
+  <main class="main">
+
+    <?
+      $breadcrumbsList = [
+        'left' => [
+          'Главная' => $data->app->router->pathFor('admin.home'),
+          $model::getName()[1] => $data->app->router->pathFor('admin.'.strtolower($key)),
+          $data->app->breadcrumbs->last( $data, strtolower($key) ) => ''
+        ]        
+      ];
+
+      echo $data->app->breadcrumbs->get($breadcrumbsList);
+    ?>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="animated fadeIn">
+
+            <?php require $data->app->path['view'] . 'templates/partials/flash.phtml' ?>
+
+            <form action="<?=$data->app->router->pathFor("admin.$moduleName.$mode", ['id' => $id])?>" method="post">
+
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Основные</a>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane active" id="home" role="tabpanel">
+
+                  <div class="row">
+                    <div class="col-12 col-md-4">
+                      <div class="form-group">
+                        <label for="name">Название <i class="text-danger">*</i></label>
+                        <input class="form-control <?=$errors->name ? 'is-invalid' : ''?>" id="name" type="text" name="name" value="<?=$element->name?>" >
+                        <div class="invalid-feedback"><?=$errors->name ? $errors->name : ''?></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12 col-md-4">
+                      <div class="form-group">
+                        <label for="art">Артикул</label>
+                        <input class="form-control <?=$errors->art ? 'is-invalid' : ''?>" id="art" type="text" name="art" value="<?=$element->art?>">
+                        <div class="invalid-feedback"><?=$errors->art ? $errors->art : ''?></div>
+                      </div>
+                    </div>
+                  </div>
+                  <script>
+                    $( function() {
+                      $( "#art" ).autocomplete({
+                        source: [<?=$data->app->f->autocomplete($model, 'art')?>]
+                      });
+                    } );
+                  </script>
+
+                  <?if($id):?>
+
+                  <div class="row">
+                    <div class="col-12 col-md-4">
+                      <div class="form-group">
+                        <label for="php">PHP</label>
+                        <input class="form-control" id="php" type="text" value="ShortFilter::get(<?=$element->id?>)" readonly>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12 col-md-4">
+                      <div class="form-group">
+                        <label for="short">Шорткод</label>
+                        <input class="form-control" id="short" type="text" value="{{short-<?=$element->id?>}}" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <?endif;?>
+
+                  <div class="form-group">
+                    <label for="text">Контент</label>
+                    <textarea class="form-control summernote" id="text" name="text" rows="9"><?=$element->text?></textarea>
+                  </div>
+                  
+                </div>                
+              </div>
+
+              <div class="card">
+                <div class="card-footer btn-toolbar justify-content-between">
+                  <button class="btn btn-sm btn-primary" type="submit">
+                    <i class="fa fa-dot-circle-o"></i> Сохранить</button>
+
+                  <a href="<?=$data->app->router->pathFor('admin.'.$moduleName.'.add')?>" class="btn btn-link" aria-pressed="true">Добавить ещё</a>
+
+                </div>
+              </div>
+
+              <?=$csrf['field']?>
+
+            </form>
+
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+
+  </main>
+</div>
+    
+    
+<? require $data->app->path['view'] . 'admin/templates/partials/footer.phtml' ?>

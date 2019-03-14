@@ -1,0 +1,38 @@
+<div id="modal-feedback" class="mf">
+  <div class="mf__wrap">
+    <div class="mf__header">
+      <a href="" class="mf__close">
+        <img src="" alt="" class="mf__img">
+      </a>
+      <div class="mf__title">
+        <div class="mf__title1">Форма обратной связи</div>
+        <div class="mf__title2">Введите Ваши данные</div>
+      </div>          
+    </div>
+    <div class="mf__body">
+      <form class="mf__form" onsubmit="return false;">
+
+        <div class="mf__label">
+          <input name="name" type="text" placeholder="Введите Ваше имя" class="mf__input" required>
+        </div>
+        <div class="mf__label">
+          <input name="email" type="text" placeholder="Введите Ваш Email" class="mf__input" required>
+        </div>            
+        <div class="mf__label">
+          <p class="mf__text">Для получения информации убедительная просьба указывать корректный адрес электронной почты</p>
+        </div>
+        <div class="mf__label">
+          <input name="phone" autocomplete="on" class="mf__input" type="text" placeholder="+7(___)___-__-__" required>
+        </div>
+
+        <?$csrf = $data->app->csrf?>
+        <input type="hidden" id="<?=$csrf->getTokenNameKey()?>" name="<?=$csrf->getTokenNameKey()?>" value="<?=$csrf->getTokenName()?>">
+        <input type="hidden" id="<?=$csrf->getTokenValueKey()?>" name="<?=$csrf->getTokenValueKey()?>" value="<?=$csrf->getTokenValue()?>">
+        <input type="hidden" name="action" value="<?=$data->app->router->pathFor('ajax')?>">
+        <input name="subject" type="hidden" value="Обратная связь">
+        <input name="form_id" type="hidden" value="1">
+      </form>
+    </div>
+  </div>
+</div>
+<div id="wrap-dialog"></div>

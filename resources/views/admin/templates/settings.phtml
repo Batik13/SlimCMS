@@ -1,0 +1,50 @@
+<?php
+
+use App\Modules\Shorts\Models\Short;
+$coreui = $data->app->path['root'] . $data->app->path['view'] . 'admin/coreui/';
+
+?>
+
+
+<?php require $data->app->path['view'] . 'admin/templates/partials/header.phtml' ?>
+
+
+<div class="app-body">
+
+  <?php require $data->app->path['view'] . 'admin/templates/partials/sidebar.phtml' ?>
+
+  <main class="main">
+
+    <?=$data->app->breadcrumbs->get([
+      'left' => [
+        'Главная' => $data->app->router->pathFor('admin.home'),
+        'Настройки' => ''
+      ]
+    ])?>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="animated fadeIn">
+
+            <?php require $data->app->path['view'] . 'templates/partials/flash.phtml' ?>
+
+            <form action="<?=$data->app->router->pathFor("admin.settings")?>" method="post">
+
+              <?
+                echo $data->app->AdminBuilder->getDynamicField("admin.settings");
+                echo $csrf['field'];
+              ?>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+    
+    
+<?php require $data->app->path['view'] . 'admin/templates/partials/footer.phtml' ?>

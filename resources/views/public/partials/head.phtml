@@ -1,0 +1,36 @@
+<?
+  use App\Source\ModelFilterBuilder\OptionFilter;
+  $route = $data->request->getAttribute('route');
+  $slug = $route->getArguments()['slug'];
+  use App\Modules\Pages\Models\Page;
+?>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- <link rel="stylesheet" href="<?=$tempPath?>app.css"> -->
+  <?
+    echo $data->app->plugin->addCss();
+
+    $seoTemplate = '
+    <title>%1$s</title>
+    <meta name="description" content="%2$s">
+    <meta name="keywords" content="%3$s">';
+
+    // home
+    if (empty($slug)) {
+      echo sprintf($seoTemplate, OptionFilter::get(2), OptionFilter::get(3), OptionFilter::get(4));
+    }
+
+    // inner
+    else {
+      $p = Page::where('url', '=', $slug)->get()[0];
+      echo sprintf($seoTemplate, $p->title, $p->description, $p->keywords);
+    }
+  ?>
+  <link rel="icon" href="<?=$data->request->getUri()->getBasePath()?>/favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <div class="page">

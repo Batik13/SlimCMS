@@ -1,0 +1,14 @@
+<?
+  use App\Menu\Menu;
+  use App\Modules\Pages\Models\Page;
+  use App\Source\ModelFilterBuilder\ShortFilter;
+  use App\Source\ModelFilterBuilder\OptionFilter;
+
+  $art = Page::where('url', '=', $slug)->get()[0]->art;
+
+?>
+
+<header>
+  <p>header</p>
+  <?=new Menu($data)?>
+</header>

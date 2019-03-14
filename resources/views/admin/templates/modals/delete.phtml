@@ -1,0 +1,45 @@
+<!-- data-toggle="modal" data-target="#deleteModal" -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-warning" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Внимание!</h4>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Вы действительно хотите удалить?</p>
+      </div>
+      <div class="modal-footer">
+        <form id="DemoForm" onsubmit="return false;">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Отменить</button>
+          <button class="btn btn-warning" type="button" id="deleteRecord">Применить</button>
+          <?=$csrf['field']?>
+        </form>        
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function(){   
+
+    $('#deleteRecord').on('click', function(){
+      var
+      dataRow = vars.get('dataRow'),
+      csrf_name = $('#csrf_name').val(),
+      csrf_value = $('#csrf_value').val();
+
+      $.ajax({
+        url: '<?=$data->app->router->pathFor('admin.'. $moduleName .'.delete', ['id' => $value->id])?>',
+        type: "POST",
+        data: "csrf_name="+csrf_name+"&csrf_value="+csrf_value+"&id="+dataRow[0],
+        success: function(data){
+          window.location.reload();
+        }
+      });
+
+    });
+  });
+</script>

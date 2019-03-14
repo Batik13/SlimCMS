@@ -1,0 +1,27 @@
+<?php
+
+  use App\Source\ModelFilterBuilder\ShortFilter;
+  use App\Source\ModelFilterBuilder\OptionFilter;
+  use App\Modules\Reviews\ModelShortBuilder\HomeShort as Reviews;
+
+  $tempPath = $data->app->path['view'] . 'public/'. $data->app->settings['public']['template'] .'/';
+  $partials = $data->app->path['view'] . 'public/partials/';
+
+?>
+
+  <?php require $partials . 'head.phtml' ?>
+
+  <?php require $partials . 'header.phtml' ?>
+
+  <?//=new Reviews()?>
+
+  <?php require $partials . 'footer.phtml' ?>
+
+  <?php //require $partials . 'modal.phtml' ?>
+
+    
+  </div>
+  <!-- <script src="<?=$tempPath?>app.js"></script> -->
+  <?=$data->app->plugin->addJs()?>
+</body>
+</html>
