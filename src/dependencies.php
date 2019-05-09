@@ -4,6 +4,9 @@ $mm = new ModuleManager();
 
 $container = $app->getContainer();
 
+$container['f'] = function( $container ) {
+  return new App\Functions\Functions( $container );
+};
 
 $capsule = new \Illuminate\Database\Capsule\Manager;
 $capsule->addConnection($container['settings']['db']);
@@ -19,14 +22,17 @@ $container['auth'] = function( $container ) {
   return new \App\Auth\Auth;
 };
 
+$container['pagination'] = function( $container ) {
+  return new \App\Pagination\Pagination;
+};
+
 $container['flash'] = function($container) {
   return new \Slim\Flash\Messages;
 };
 
 $container['path'] = function( $container ) {
   $pathList = $container->get('settings')['path'];
-  $pathList['root'] = $container->request->getUri()->getBasePath() . '/';
-
+  $pathList["root"] = $container->f->request_url();
   return $pathList;
 };
 
@@ -67,10 +73,6 @@ $container['breadcrumbs'] = function( $container ) {
   return new App\Breadcrumbs\Breadcrumbs;
 };
 
-$container['f'] = function( $container ) {
-  return new App\Functions\Functions( $container );
-};
-
 $container['element'] = function( $container ) {
   return new App\Functions\Element;
 };
@@ -103,8 +105,13 @@ $container['notFoundHandler'] = function ( $container ) {
 
 
 foreach ($mm->get() as $value) {
-  $container[$value['controller']] = function( $container ) use ($value) {
-    $controllerClassName = '\App\Modules\\'.$value['dirName'].'\Controllers\Admin\\'.$value['controller'];
+  $container[$value['adminController']] = function( $container ) use ($value) {
+    $controllerClassName = '\App\Modules\\'.$value['dirName'].'\Controllers\Admin\\'.$value['adminController'];
+    return new $controllerClassName($container);
+  };
+
+  $container[$value['siteController']] = function( $container ) use ($value) {
+    $controllerClassName = '\App\Modules\\'.$value['dirName'].'\Controllers\Site\\'.$value['siteController'];
     return new $controllerClassName($container);
   };
 }

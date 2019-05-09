@@ -18,7 +18,8 @@ class ModuleManager {
 
         $modules[$dirName] = [
           'dirName' => $dirName,
-          'controller' => 'Admin'. $dirName .'Controller',
+          'adminController' => 'Admin'. $dirName .'Controller',
+          'siteController' => 'Site'. $dirName .'Controller',
           'model' => "App\\Modules\\{$dirName}\\Models\\{$data->name}",
           'config' => $data
         ];

@@ -19,33 +19,41 @@ return [
     ],
 
     'public' => [
-      'template' => 'templateName'
+      'template' => 'tempName'
     ],
 
     'db' => [
       'driver' => 'mysql',
       'host' => 'localhost',
-      'database' => 'slimcms',
+      'database' => 'dbName',
       'username' => 'mysql',
       'password' => 'mysql',
       'charset' => 'utf8',
       'collation' => 'utf8_unicode_ci',
-      'prefix' => '',
+      'prefix' => ''
     ],
 
     'plugins' => [
-      'datatables' => [
+      'jquery' => [
+        'public' => 'all',
+        'admin' => '',
+      ],
+      'jquery.form' => [
+        'public' => 'all',
+        'admin' => '',
+      ],
+      'siteDatatables' => [
+        'public' => 'all',
+        'admin' => '',
+      ],
+      'adminDatatables' => [
         'public' => '',
         'admin' => 'all',
       ],
       'summernote' => [
         'public' => '',
         'admin' => 'all',
-      ],
-      'jqueryui' => [
-        'public' => 'all',
-        'admin' => '',
-      ],
+      ],      
       'codemirror' => [
         'public' => '',
         'admin' => 'all'

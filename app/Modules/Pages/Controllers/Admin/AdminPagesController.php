@@ -39,13 +39,18 @@ class AdminPagesController extends Controller {
     
     try {
       $element = Page::create([
-        'name' => $request->getParam('name'),
-        'url' => $request->getParam('url'),
-        'art' => $request->getParam('art'),
-        'text' => $request->getParam('text'),
-        'title' => $request->getParam('title'),
-        'description' => $request->getParam('description'),
-        'keywords' => $request->getParam('keywords'),
+        'publish' => htmlspecialchars($request->getParam('publish')),
+        'name' => htmlspecialchars($request->getParam('name')),
+        'sort' => htmlspecialchars($request->getParam('sort')),
+        'url' => htmlspecialchars($request->getParam('url')),
+        'art' => htmlspecialchars($request->getParam('art')),
+        'text' => htmlspecialchars($request->getParam('text')),
+        'title' => htmlspecialchars($request->getParam('title')),
+        'description' => htmlspecialchars($request->getParam('description')),
+        'keywords' => htmlspecialchars($request->getParam('keywords')),
+        'min_text' => htmlspecialchars($request->getParam('min_text')),
+        'seo_title' => htmlspecialchars($request->getParam('seo_title')),
+        'seo_text' => htmlspecialchars($request->getParam('seo_text')),
       ]);
       
     } catch (QueryException $e) {
@@ -65,7 +70,10 @@ class AdminPagesController extends Controller {
 
 
   public function getEdit( $request, $response ) {
+    $route = $request->getAttribute('route');
+    $slug = $route->getArguments()['id'];
     $data = (object) ['app' => $this, 'request' => $request, 'response' => $response];
+    $data->slug = $slug;
     return $this->view->render($response, 'inner.phtml', ['data' => $data]);
   }
 
@@ -86,13 +94,18 @@ class AdminPagesController extends Controller {
     try {
       Page::find($argument)
         ->update([
-          'name' => $request->getParam('name'),
-          'url' => $request->getParam('url'),
-          'art' => $request->getParam('art'),
-          'text' => $request->getParam('text'),
-          'title' => $request->getParam('title'),
-          'description' => $request->getParam('description'),
-          'keywords' => $request->getParam('keywords'),
+          'publish' => htmlspecialchars($request->getParam('publish')),
+          'name' => htmlspecialchars($request->getParam('name')),
+          'sort' => htmlspecialchars($request->getParam('sort')),
+          'url' => htmlspecialchars($request->getParam('url')),
+          'art' => htmlspecialchars($request->getParam('art')),
+          'text' => htmlspecialchars($request->getParam('text')),
+          'title' => htmlspecialchars($request->getParam('title')),
+          'description' => htmlspecialchars($request->getParam('description')),
+          'keywords' => htmlspecialchars($request->getParam('keywords')),
+          'min_text' => htmlspecialchars($request->getParam('min_text')),
+          'seo_title' => htmlspecialchars($request->getParam('seo_title')),
+          'seo_text' => htmlspecialchars($request->getParam('seo_text')),
         ]);
         
     } catch (QueryException $e) {
@@ -108,13 +121,33 @@ class AdminPagesController extends Controller {
   }
 
 
-
   public function postDelete( $request, $response ) {
 
     $id = $request->getParsedBody()['id'];
     Page::find($id)->delete();
 
     return $id;
+  }
+
+
+  public function getSettings( $request, $response ) {
+    $route = $request->getAttribute('route');
+    $slug = $route->getArguments()['id'];
+    $data = (object) ['app' => $this, 'request' => $request, 'response' => $response];
+    $data->slug = $slug;
+
+    return $this->view->render($response, 'settings.phtml', ['data' => $data]);
+  }
+
+  public function postSettings( $request, $response ) {
+    try {
+      Option::updateDynamicField($request);
+    }
+    catch (QueryException $e) {
+      $this->flash->addMessage('error', $e->getMessage());
+    }
+
+    return $response->withRedirect($this->router->pathFor('admin.page.settings'));
   }
 
 }

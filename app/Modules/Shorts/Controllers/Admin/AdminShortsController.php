@@ -28,9 +28,9 @@ class AdminShortsController extends Controller {
         
     try {
       $element = Short::create([
-        'name' => $request->getParam('name'),
-        'text' => $request->getParam('text'),
-        'art' => $request->getParam('art'),
+        'name' => htmlspecialchars($request->getParam('name')),
+        'text' => htmlspecialchars($request->getParam('text')),
+        'art' => htmlspecialchars($request->getParam('art')),
       ]);
       
     } catch (QueryException $e) {
@@ -57,9 +57,9 @@ class AdminShortsController extends Controller {
     try {
       Short::find($argument)
         ->update([
-          'name' => $request->getParam('name'),
-          'text' => $request->getParam('text'),
-          'art' => $request->getParam('art'),
+          'name' => htmlspecialchars($request->getParam('name')),
+          'text' => htmlspecialchars($request->getParam('text')),
+          'art' => htmlspecialchars($request->getParam('art')),
         ]);
         
     } catch (QueryException $e) {

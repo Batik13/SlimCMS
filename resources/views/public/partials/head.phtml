@@ -1,16 +1,25 @@
 <?
-  use App\Source\ModelFilterBuilder\OptionFilter;
-  $route = $data->request->getAttribute('route');
-  $slug = $route->getArguments()['slug'];
-  use App\Modules\Pages\Models\Page;
+  use App\Modules\Options\ModelFilterBuilder\OptionFilter;
+  use App\Modules\Shorts\ModelFilterBuilder\ShortFilter;
+  $route = $data->request->getAttribute('route');  
+
+  $listPages = ['shema-rabotyi', 'nashi-gostinitsy'];
 ?>
+
+
 <!DOCTYPE html>
-<html lang="ru">
+<html class="page  no-js" lang="ru">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <!-- <link rel="stylesheet" href="<?=$tempPath?>app.css"> -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="format-detection" content="date=no">
+  <meta name="format-detection" content="address=no">
+  <meta name="format-detection" content="email=no">
+  <meta content="notranslate" name="google">
+  <link rel="stylesheet" href="<?=$tempPath?>css/style.css">
+  <link rel="stylesheet" href="<?=$data->app->path['root'] . $data->app->path['view']?>public/default/css/style.css">
   <?
     echo $data->app->plugin->addCss();
 
@@ -19,18 +28,30 @@
     <meta name="description" content="%2$s">
     <meta name="keywords" content="%3$s">';
 
-    // home
-    if (empty($slug)) {
+    if (empty($model)) { // home
       echo sprintf($seoTemplate, OptionFilter::get(2), OptionFilter::get(3), OptionFilter::get(4));
-    }
-
-    // inner
-    else {
-      $p = Page::where('url', '=', $slug)->get()[0];
-      echo sprintf($seoTemplate, $p->title, $p->description, $p->keywords);
+    }    
+    else { // inner
+      echo sprintf($seoTemplate, $model->title, $model->description, $model->keywords);
     }
   ?>
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    function cth(c){document.documentElement.classList.add(c)}
+    'ontouchstart' in window?cth('touch'):cth('no-touch');
+    if(typeof InstallTrigger!=='undefined')cth('firefox');
+    if(/constructor/i.test(window.HTMLElement)||(function(p){return p.toString()==="[object SafariRemoteNotification]"})(!window['safari']||(typeof safari!=='undefined'&&safari.pushNotification)))cth('safari');
+    if(/*@cc_on!@*/false||!!document.documentMode)cth('ie');
+    if(!(/*@cc_on!@*/false||!!document.documentMode)&&!!window.StyleMedia)cth('edge');
+    if(!!window.chrome&&(!!window.chrome.webstore||!!window.chrome.runtime))cth('chrome');
+    if(~navigator.appVersion.indexOf("Win"))cth('windows');
+    if(~navigator.appVersion.indexOf("Mac"))cth('osx');
+    if(~navigator.appVersion.indexOf("Linux"))cth('linux');
+  </script>
   <link rel="icon" href="<?=$data->request->getUri()->getBasePath()?>/favicon.ico" type="image/x-icon">
 </head>
-<body>
-  <div class="page">
+
+<body class="<?=($route->getName()=='home')?' homepage':' not-homepage'?> ">
+  <noscript>У вас отключен JavaScript. Это пугает.</noscript>
+  <div class="page__inner">
+    <div class="page__content">

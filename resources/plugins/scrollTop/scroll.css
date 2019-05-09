@@ -1,0 +1,20 @@
+#scroltop {
+	position: fixed;
+	z-index: 10;
+	left: 10px;
+	bottom: 20px;
+	width: 48px;
+	opacity: .7;
+	text-align: center;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: center 5px;
+	background-image: url('top.png');
+	padding: 25px 0 5px 0;
+	background-color: #004EA9;
+	border: 1px solid #004EA9;
+	color: #fff;
+	border-radius: 2px;
+	display: none;
+	font-size: 12px;
+}

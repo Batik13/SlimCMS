@@ -1,9 +1,17 @@
 <?
-  use App\Source\ModelFilterBuilder\ShortFilter;
-  use App\Source\ModelFilterBuilder\OptionFilter;
+  use App\Modules\Options\ModelFilterBuilder\OptionFilter;
+  use App\Modules\Shorts\ModelFilterBuilder\ShortFilter;
   use App\Menu\Menu;
 ?>
+      <footer class="page-footer" role="contentinfo"></footer>
+    </div>
+  </div>
+  <script src="<?=$tempPath?>js/bundle.js"></script>
+  <?
+    // Plugins script required by this view
+    echo $data->app->plugin->addJs();
+  ?>
+  <script src="<?=$data->app->path['root'] . $data->app->path['view']?>public/default/js/script.js"></script>
+</body>
 
-<footer>
-  <p>footer</p>
-</footer>
+</html>

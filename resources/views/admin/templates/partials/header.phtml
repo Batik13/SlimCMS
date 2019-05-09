@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">      
-    <title>Slim 3 - Admin Panel</title>
+    <title>Admin Panel</title>
 
 
     <!-- Icons-->
@@ -48,6 +48,13 @@
           get: get,
         }
       })();
+
+      var path = {
+        root: "<?=$data->app->path['root']?>",
+        plugins: "<?=$data->app->path['root'].$data->app->path['plugins']?>",
+      };
+
+      vars.set('path', path);
     </script>
   </head>
 
@@ -61,7 +68,7 @@
 
 
       <a class="navbar-brand" href="<?=$data->app->router->pathFor('admin.home')?>">
-        <span class="navbar-brand-full">Slim 3 - Admin Panel</span>
+        <span class="navbar-brand-full">Admin Panel</span>
       </a>
       <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>

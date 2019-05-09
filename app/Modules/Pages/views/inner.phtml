@@ -18,13 +18,17 @@ if ($id) {
 if (!empty($old)) {
   $old = (object) $old;
 
-  $element->name = $old->name;
-  $element->url = $old->url;
-  $element->art = $old->art;
-  $element->text = $old->text;
-  $element->title = $old->title;
-  $element->description = $old->description;
-  $element->keywords = $old->keywords;
+  $element->publish = htmlspecialchars($old->publish);
+  $element->name = htmlspecialchars($old->name);
+  $element->sort = htmlspecialchars($old->sort);
+  $element->url = htmlspecialchars($old->url);
+  $element->art = htmlspecialchars($old->art);
+  $element->text = htmlspecialchars($old->text);
+  $element->title = htmlspecialchars($old->title);
+  $element->description = htmlspecialchars($old->description);
+  $element->keywords = htmlspecialchars($old->keywords);
+  $element->seo_title = htmlspecialchars($old->seo_title);
+  $element->seo_text = htmlspecialchars($old->seo_text);
 }
 
 ?>
@@ -43,9 +47,12 @@ if (!empty($old)) {
       $breadcrumbsList = [
         'left' => [
           'Главная' => $data->app->router->pathFor('admin.home'),
-          $model::getName()[1] => $data->app->router->pathFor('admin.'. strtolower($key)),
+          $model::getName()[1] => $data->app->router->pathFor('admin.'.strtolower($key)),
           $data->app->breadcrumbs->last( $data, strtolower($key) ) => ''
-        ]        
+        ],
+        'right' => [
+          'Настройки' => $data->app->router->pathFor('admin.'.$moduleName.'.settings')
+        ]
       ];
 
       echo $data->app->breadcrumbs->get($breadcrumbsList);
@@ -67,10 +74,38 @@ if (!empty($old)) {
                 <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#seo" role="tab" aria-controls="seo" aria-selected="false">Seo</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#seo-block" role="tab" aria-controls="seo-block" aria-selected="false">Seo-блок</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#fields" role="tab" aria-controls="fields" aria-selected="false">Дополнительные поля</a>
+                </li>
               </ul>
 
               <div class="tab-content">
                 <div class="tab-pane active" id="home" role="tabpanel">
+
+                  <div class="row">
+                    <div class="col-12 col-md-4">
+                      <div class="form-group">
+                        <label for="publish">Публиковать</label>
+                        <select class="form-control select" name="publish" id="publish" value="<?=$element->publish?>">
+                          <option value="1">Да</option>
+                          <option value="0">Нет</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" style="display: none;">
+                    <div class="col-12 col-md-4">
+                      <div class="form-group">
+                        <label for="sort">Сортировка <i class="text-danger">*</i></label>
+                        <input class="form-control <?=$errors->sort ? 'is-invalid' : ''?>" id="sort" type="text" name="sort" value="<?=$element->sort?>" >
+                        <div class="invalid-feedback"><?=$errors->sort ? $errors->sort : ''?></div>
+                      </div>
+                    </div>
+                  </div>
 
                   <div class="row">
                     <div class="col-12 col-md-4">
@@ -132,6 +167,25 @@ if (!empty($old)) {
                     <textarea class="form-control" id="keywords" name="keywords" rows="2"><?=$element->keywords?></textarea>
                   </div>
 
+                </div>
+                <div class="tab-pane" id="seo-block" role="tabpanel">
+                  
+                  <div class="form-group">
+                    <label for="seo_title">Заголовок</label>
+                    <textarea class="form-control" id="seo_title" name="seo_title" rows="2"><?=$element->seo_title?></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="seo_text">Текст</label>
+                    <textarea class="form-control summernote" id="seo_text" name="seo_text" rows="9"><?=$element->seo_text?></textarea>
+                  </div>
+
+                </div>
+                <div class="tab-pane" id="fields" role="tabpanel">
+                  <div class="form-group">
+                    <label for="min_text">Малое описание</label>
+                    <textarea class="form-control summernote" id="min_text" name="min_text" rows="9"><?=$element->min_text?></textarea>
+                  </div>
                 </div>
               </div>
 

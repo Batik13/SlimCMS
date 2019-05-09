@@ -18,6 +18,23 @@ $app->post('/auth/signup', 'AuthController:postSignUp');
 $app->get('/auth/signin', 'AuthController:getSignIn')->setName('auth.signin');
 $app->post('/auth/signin', 'AuthController:postSignIn');
 
+// routes modules site
+foreach ($mm->get() as $value) {
+  $singularName = strtolower($value['config']->name);
+  $dirName = strtolower($value['dirName']);
+
+  if ($value['config']->site) {
+    $app->get('/'.$dirName.'/ajax/', $value['siteController'].':ajax')->setName($singularName.'.ajax');
+    $app->get('/'.$dirName.'/search'.$EXT, $value['siteController'].':search')->setName($singularName.'.search');
+    $app->get('/'.$dirName.'/{slug}'.$EXT, $value['siteController'].':inner')->setName($singularName);
+    $app->get('/'.$dirName.'/page/{slug}'.$EXT, $value['siteController'].':pagination')->setName($singularName.'.pagination');
+    $app->get('/'.$dirName.'/category/{category}'.$EXT, $value['siteController'].':category')->setName($singularName.'.category');
+    $app->get('/'.$dirName.'/search/page/{slug}'.$EXT, $value['siteController'].':search')->setName($singularName.'.search.pagination');
+    $app->get('/'.$dirName.'/{category}/{slug}'.$EXT, $value['siteController'].':product')->setName($singularName.'.product');
+    $app->get('/'.$dirName.'/category/{category}/page/{slug}'.$EXT, $value['siteController'].':category')->setName($singularName.'.category.pagination');
+  }
+}
+
 
 // admin
 $app->group('', function() use ( $mm ) {
@@ -26,21 +43,20 @@ $app->group('', function() use ( $mm ) {
   $this->get('/admin/settings', 'AdminController:getSettings')->setName('admin.settings');
   $this->post('/admin/settings', 'AdminController:postSettings');
 
-  
+  // routes modules admin
   foreach ($mm->get() as $value) {
     $singularName = strtolower($value['config']->name);
     $dirName = strtolower($value['dirName']);
 
-    $this->get('/admin/'.$dirName, $value['controller'].':home')->setName('admin.'.$dirName);
-    $this->get('/admin/'.$singularName.'/add', $value['controller'].':getAdd')->setName('admin.'.$singularName.'.add');
-    $this->post('/admin/'.$singularName.'/add', $value['controller'].':postAdd');
-    $this->get('/admin/'.$singularName.'/settings', $value['controller'].':getSettings')->setName('admin.'.$singularName.'.settings');
-    $this->post('/admin/'.$singularName.'/settings', $value['controller'].':postSettings');
-    $this->get('/admin/'.$singularName.'/{id}', $value['controller'].':getEdit')->setName('admin.'.$singularName.'.edit');
-    $this->post('/admin/'.$singularName.'/{id}', $value['controller'].':postEdit');
-    $this->get('/admin/'.$singularName.'/delete/{id}', $value['controller'].':getDelete')->setName('admin.'.$singularName.'.delete');
-    $this->post('/admin/'.$singularName.'/delete/{id}', $value['controller'].':postDelete');
+    $this->get('/admin/'.$dirName, $value['adminController'].':home')->setName('admin.'.$dirName);
+    $this->get('/admin/'.$singularName.'/add', $value['adminController'].':getAdd')->setName('admin.'.$singularName.'.add');
+    $this->post('/admin/'.$singularName.'/add', $value['adminController'].':postAdd');
+    $this->get('/admin/'.$singularName.'/settings', $value['adminController'].':getSettings')->setName('admin.'.$singularName.'.settings');
+    $this->post('/admin/'.$singularName.'/settings', $value['adminController'].':postSettings');
+    $this->get('/admin/'.$singularName.'/{id}', $value['adminController'].':getEdit')->setName('admin.'.$singularName.'.edit');
+    $this->post('/admin/'.$singularName.'/{id}', $value['adminController'].':postEdit');
+    $this->get('/admin/'.$singularName.'/delete/{id}', $value['adminController'].':getDelete')->setName('admin.'.$singularName.'.delete');
+    $this->post('/admin/'.$singularName.'/delete/{id}', $value['adminController'].':postDelete');
   }
-
 
 })->add(new AuthMiddleware($container));

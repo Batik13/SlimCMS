@@ -48,7 +48,7 @@ $coreui = $data->app->path['root'] . $data->app->path['view'] . 'admin/coreui/';
             
                   foreach ($model::all() as $value) {
                     $href = $data->app->router->pathFor('admin.'.$moduleName.'.edit', ['id' => $value->id]);
-                    $controls = $data->app->AdminBuilder->controls(['edit' => $url, 'delete' => $value->id]);
+                    $controls = $data->app->AdminBuilder->controls(['edit' => $href, 'delete' => $value->id]);
 
                     $format = '
                       <tr>

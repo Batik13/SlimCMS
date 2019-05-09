@@ -18,9 +18,9 @@ if ($id) {
 if (!empty($old)) {
   $old = (object) $old;
 
-  $element->name = $old->name;
-  $element->text = $old->text;
-  $element->art = $old->art;
+  $element->name = htmlspecialchars($old->name);
+  $element->text = htmlspecialchars($old->text);
+  $element->art = htmlspecialchars($old->art);
 }
 
 ?>
@@ -107,7 +107,7 @@ if (!empty($old)) {
                     <div class="col-12 col-md-4">
                       <div class="form-group">
                         <label for="short">Шорткод</label>
-                        <input class="form-control" id="short" type="text" value="{{short-<?=$element->id?>}}" readonly>
+                        <input class="form-control" id="short" type="text" value="{{short <?=$element->id?>}}" readonly>
                       </div>
                     </div>
                   </div>

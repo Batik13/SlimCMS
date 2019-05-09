@@ -1,14 +1,18 @@
 <?
+  use App\Modules\Options\ModelFilterBuilder\OptionFilter;
+  use App\Modules\Shorts\ModelFilterBuilder\ShortFilter;
   use App\Menu\Menu;
-  use App\Modules\Pages\Models\Page;
-  use App\Source\ModelFilterBuilder\ShortFilter;
-  use App\Source\ModelFilterBuilder\OptionFilter;
 
-  $art = Page::where('url', '=', $slug)->get()[0]->art;
-
+  $route = $data->request->getAttribute('route');  
 ?>
 
-<header>
-  <p>header</p>
-  <?=new Menu($data)?>
+<header id="header" class="page-header <?=($route->getName()=='home' || in_array($slug, $listPages))?'page-header--gradient':''?>" role="banner">
+
+  <?=OptionFilter::code('phone1')?>
+  <?=OptionFilter::code('email')?>
+  <?=$data->app->router->pathFor('home')?>
+  <?=OptionFilter::code('title')?>
+  <?=ShortFilter::get(1, 'src')?>
+  <?=new Menu($data, 'main')?>
+    
 </header>

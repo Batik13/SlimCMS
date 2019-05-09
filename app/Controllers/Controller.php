@@ -12,6 +12,6 @@ class Controller {
 		if ($this->container->{$property}) {
 			return $this->container->{$property};
 		}
-
 	}
+  
 }

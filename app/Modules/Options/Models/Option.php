@@ -3,6 +3,7 @@
 namespace App\Modules\Options\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Functions\Functions as f;
 
 class Option extends Model {
 
@@ -19,6 +20,14 @@ class Option extends Model {
     'code',
     'values',
   ];
+
+  public function getValueAttribute($value) {
+    return str_replace('{{root}}', f::root(), $value);
+  }
+
+  public function setValueAttribute($value) {
+    $this->attributes['value'] = str_replace(f::root(), '{{root}}', $value);
+  }
 
   public function getName() {
     return ['option', 'Опции'];

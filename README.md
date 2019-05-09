@@ -35,7 +35,3 @@ Open file **src/settings.php** and write down the necessary database settings:
 
 ### Admin panel
 The administrative zone can be reached at the following address - **site.ru/auth/signin**
-```
-Email(login): adm@mail.ru
-Password: 123
-```

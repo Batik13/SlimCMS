@@ -1,0 +1,187 @@
+.product-outer .dataTables_length {
+  display: none;
+}
+
+.product-outer #dataTables_filter {
+  display: none;
+}
+.product-outer #dataTables {
+  border-bottom: none;
+}
+.product-outer .dataTables_info {
+  display: none;
+}
+.product-outer .dataTables_paginate {
+  /*display: none;*/
+}
+
+.page #dataTables {
+  padding: 0;
+}
+
+#dataTables td{
+  padding: 0;
+}
+
+.pagination__item--active {
+  background: #fff;
+  border-color: #e1f4f9;
+  color: #36b6d9;
+}
+
+.product__gallery ul li a img {
+  width: 170px;
+}
+
+.single-product {
+
+}
+
+.text--warning {
+  background: #F44336;
+  color: #fff;
+  padding: 0 3px;
+  margin-right: 3px;
+}
+
+.pagination {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+}
+
+.articles-vertical {
+  margin-bottom: 60px;
+}
+
+.article--single {
+  margin-bottom: 0;
+}
+
+.article--single .article__content {
+  overflow: visible;
+  height: auto;
+}
+
+.box__left-block {
+  z-index: 1;
+}
+
+.map--home {
+  height: auto;
+  min-height: 500px;
+}
+
+.banner--slider .banner__link {
+
+}
+
+.banner {
+  /*background: none;*/
+}
+
+.banner--vertical {
+  /*height: auto;*/
+}
+
+.stages-outer {
+  
+}
+
+.page-header--gradient {
+
+}
+
+.page-header--gradient .page-header__bottom {
+  background: #0a2d6700;  
+  transition: all 1s;
+
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0a2d67+0,0a2d67+26&1+30,0+100 */
+  background: -moz-linear-gradient(top, rgba(10,45,103,1) 0%, rgba(10,45,103,1) 26%, rgba(10,45,103,1) 30%, rgba(10,45,103,0) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(10,45,103,1) 0%,rgba(10,45,103,1) 26%,rgba(10,45,103,1) 30%,rgba(10,45,103,0) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(10,45,103,1) 0%,rgba(10,45,103,1) 26%,rgba(10,45,103,1) 30%,rgba(10,45,103,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0a2d67', endColorstr='#000a2d67',GradientType=0 ); /* IE6-9 */
+}
+
+@media (max-width: 767px) {
+  .page-header--gradient .page-header__bottom {
+    background: #0a2d67;
+  }
+}
+
+.page-header--fixed .page-header__bottom{
+  background: #0a2d67;
+  transition: all 1s;
+}
+
+.not-homepage {
+  padding-top: 119px;
+}
+
+@media (max-width: 767px) {
+  .not-homepage {
+    padding-top: 175px;
+  }
+}
+
+@media (max-width: 479px){
+  .not-homepage {
+    padding-top: 220px;
+  }
+}
+
+.contacts .banner-outer {
+  margin-bottom: -140px;
+  top: -140px;
+}
+
+.banner--vertical_default {
+  height: auto;
+}
+
+.search-brand__item a {
+
+}
+
+.search-brand__item img {
+  max-height: 33px;
+  max-width: 55px;
+}
+
+.homepage  .slider-item {
+  max-height: calc(100vh - 70px);
+}
+
+.contacts .banner {
+
+}
+
+@media (max-width: 1199px) {
+  .contacts .banner {
+    width: 86%;
+  }
+}
+
+@media (max-width: 767px) {
+  .homepage .slider-item {
+    max-height: calc(100vh - 275px);
+  }
+}
+
+.not-homepage.gradient {
+  padding-top: 55px;
+}
+
+@media (max-width: 767px) {
+  .not-homepage.gradient {
+    padding-top: 175px;
+  }
+}
+
+@media (max-width: 479px) {
+  .not-homepage.gradient {
+    padding-top: 220px;
+  }
+}

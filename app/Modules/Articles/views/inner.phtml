@@ -1,0 +1,239 @@
+<?
+
+use App\Modules\Brands\Models\Brand;
+
+$key = $data->app->f->currentModule( __DIR__ );
+$module = $data->app->mm->get()[$key];
+$model = $module['model'];
+$moduleName = strtolower($module['config']->name);
+$coreui = $data->app->path['root'] . $data->app->path['view'] . 'admin/coreui/';
+
+
+$errors = (object) $errors;
+list($mode, $id) = $data->app->f->getMode($data->request);
+
+$element = $data->app->element;
+if ($id) {
+  $element = $model::find($id);
+}
+
+if (!empty($old)) {
+  $old = (object) $old;
+
+  $element->publish = htmlspecialchars($old->publish);
+  $element->name = htmlspecialchars($old->name);
+  $element->href = htmlspecialchars($old->href);
+  $element->date = htmlspecialchars($old->date);
+  $element->text = htmlspecialchars($old->text);
+  $element->min_text = htmlspecialchars($old->min_text);
+  $element->art = htmlspecialchars($old->art);
+  $element->art_href = htmlspecialchars($old->art_href);
+  $element->img = htmlspecialchars($old->img);
+  $element->thumb = htmlspecialchars($old->thumb);
+  $element->label = htmlspecialchars($old->label);
+  $element->title = htmlspecialchars($old->title);
+  $element->description = htmlspecialchars($old->description);
+  $element->keywords = htmlspecialchars($old->keywords);
+}
+
+if ($mode == 'add') {
+  $element->publish = 1;
+}
+
+?>
+
+
+<? require $data->app->path['view'] . 'admin/templates/partials/header.phtml' ?>
+
+
+<div class="app-body">
+
+  <? require $data->app->path['view'] . 'admin/templates/partials/sidebar.phtml' ?>
+
+  <main class="main">
+
+    <?
+      $breadcrumbsList = [
+        'left' => [
+          'Главная' => $data->app->router->pathFor('admin.home'),
+          $model::getName()[1] => $data->app->router->pathFor('admin.'.strtolower($key)),
+          $data->app->breadcrumbs->last( $data, strtolower($key) ) => ''
+        ],
+        'right' => [
+          'Настройки' => $data->app->router->pathFor('admin.'.$moduleName.'.settings')
+        ]
+      ];
+
+      echo $data->app->breadcrumbs->get($breadcrumbsList);
+    ?>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="animated fadeIn">
+
+            <?php require $data->app->path['view'] . 'templates/partials/flash.phtml' ?>
+
+            <form action="<?=$data->app->router->pathFor("admin.$moduleName.$mode", ['id' => $id])?>" method="post">
+
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Основные</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="false">Медиа</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#seo" role="tab" aria-controls="seo" aria-selected="false">Seo</a>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane active" id="home" role="tabpanel">
+
+                  <div class="row">
+                    <div class="col-12 col-md-4">
+                      <div class="form-group">
+                        <label for="publish">Публиковать</label>
+                        <select class="form-control select" name="publish" id="publish" value="<?=$element->publish?>">
+                          <option value="1">Да</option>
+                          <option value="0">Нет</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12 col-md-4">
+                      <div class="form-group">
+                        <label for="name">Название</label>
+                        <input class="form-control" id="name" type="text" name="name" value="<?=$element->name?>" >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12 col-md-4">
+                      <div class="form-group">
+                        <label for="href">Ссылка</label>
+                        <input class="form-control" id="href" type="text" name="href" value="<?=$element->href?>" >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12 col-md-4">
+                      <div class="form-group">
+                        <label for="date">Дата</label>
+                        <input class="form-control" id="date" type="text" name="date" value="<?=$element->date?>" >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12 col-md-4">
+                      <div class="form-group">
+                        <label for="label">Метка</label>
+                        <input class="form-control <?=$errors->label ? 'is-invalid' : ''?>" id="label" type="text" name="label" value="<?=$element->label?>">
+                        <div class="invalid-feedback"><?=$errors->label ? $errors->label : ''?></div>
+                      </div>
+                    </div>
+                  </div>
+                  <script>
+                    $( function() {
+                      $( "#label" ).autocomplete({
+                        source: [<?=$data->app->f->autocomplete($model, 'label')?>]
+                      });
+                    } );
+                  </script>
+
+                  <div class="row">
+                    <div class="col-12 col-md-4">
+                      <div class="form-group">
+                        <label for="art">Тег</label>
+                        <input class="form-control <?=$errors->art ? 'is-invalid' : ''?>" id="art" type="text" name="art" value="<?=$element->art?>">
+                        <div class="invalid-feedback"><?=$errors->art ? $errors->art : ''?></div>
+                      </div>
+                    </div>
+                  </div>
+                  <script>
+                    $( function() {
+                      $( "#art" ).autocomplete({
+                        source: [<?=$data->app->f->autocomplete($model, 'art')?>]
+                      });
+                    } );
+                  </script>
+
+                  <div class="row" style="display: none;">
+                    <div class="col-12 col-md-4">
+                      <div class="form-group">
+                        <label for="art_href">Ссылка тега</label>
+                        <input class="form-control" id="art_href" type="text" name="art_href" value="<?=$element->art_href?>" >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="min_text">Малое описание</label>
+                    <textarea class="form-control summernote" id="min_text" name="min_text" rows="3"><?=$element->min_text?></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="text">Полное описание</label>
+                    <textarea class="form-control summernote" id="text" name="text" rows="3"><?=$element->text?></textarea>
+                  </div>                  
+                </div>
+
+                <div class="tab-pane" id="media" role="tabpanel">
+                  <div class="form-group">
+                    <label for="thumb">Миниатюра</label>
+                    <textarea class="form-control summernote" id="thumb" name="thumb" rows="3"><?=$element->thumb?></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="img">Картинка</label>
+                    <textarea class="form-control summernote" id="img" name="img" rows="3"><?=$element->img?></textarea>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="seo" role="tabpanel">
+                  <div class="form-group">
+                    <label for="title">Мета заголовок</label>
+                    <textarea class="form-control" id="title" name="title" rows="2"><?=$element->title?></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="description">Мета описание</label>
+                    <textarea class="form-control" id="description" name="description" rows="2"><?=$element->description?></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="keywords">Мета ключевые слова</label>
+                    <textarea class="form-control" id="keywords" name="keywords" rows="2"><?=$element->keywords?></textarea>
+                  </div>
+                </div>
+                
+              </div>
+
+              <div class="card">
+                <div class="card-footer btn-toolbar justify-content-between">
+                  <button class="btn btn-sm btn-primary" type="submit">
+                    <i class="fa fa-dot-circle-o"></i> Сохранить</button>
+
+                  <a href="<?=$data->app->router->pathFor('admin.'.$moduleName.'.add')?>" class="btn btn-link" aria-pressed="true">Добавить ещё</a>
+                </div>
+              </div>
+
+              <?=$csrf['field']?>
+
+            </form>
+
+          </div>
+        </div>
+        
+      </div>
+      
+    </div>
+
+  </main>
+</div>
+    
+    
+<? require $data->app->path['view'] . 'admin/templates/partials/footer.phtml' ?>

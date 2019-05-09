@@ -36,7 +36,7 @@ $(document).ready( function () {
     close: function() {}
   });
 
-  $( ".btn" ).button().on( "click", function() {
+  $( ".btn-modal" ).button().on( "click", function() {
     dialog.dialog( "open" );
   });
 

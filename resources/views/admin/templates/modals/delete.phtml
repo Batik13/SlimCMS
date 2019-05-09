@@ -32,7 +32,7 @@
       csrf_value = $('#csrf_value').val();
 
       $.ajax({
-        url: '<?=$data->app->router->pathFor('admin.'. $moduleName .'.delete', ['id' => $value->id])?>',
+        url: '<?=$data->app->router->pathFor('admin.'. $moduleName .'.delete', ['id' => '1'])?>',
         type: "POST",
         data: "csrf_name="+csrf_name+"&csrf_value="+csrf_value+"&id="+dataRow[0],
         success: function(data){

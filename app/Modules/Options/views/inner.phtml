@@ -18,14 +18,14 @@ if ($id) {
 if (!empty($old)) {
   $old = (object) $old;
 
-  $element->namespace = $old->namespace;
-  $element->tab = $old->tab;
-  $element->name = $old->name;
-  $element->description = $old->description;
-  $element->value = $old->value;
-  $element->type = $old->type;
-  $element->code = $old->code;
-  $element->values = $old->values;
+  $element->namespace = htmlspecialchars($old->namespace);
+  $element->tab = htmlspecialchars($old->tab);
+  $element->name = htmlspecialchars($old->name);
+  $element->description = htmlspecialchars($old->description);
+  $element->value = htmlspecialchars($old->value);
+  $element->type = htmlspecialchars($old->type);
+  $element->code = htmlspecialchars($old->code);
+  $element->values = htmlspecialchars($old->values);
 }
 
 ?>

@@ -22,7 +22,10 @@ $coreui = $data->app->path['root'] . $data->app->path['view'] . 'admin/coreui/';
       'left' => [
         'Главная' => $data->app->router->pathFor('admin.home'),
         $model::getName()[1] => ''
-      ]      
+      ],
+      'right' => [
+        'Настройки' => $data->app->router->pathFor('admin.'.$moduleName.'.settings')
+      ]
     ])?>
 
 
@@ -35,9 +38,11 @@ $coreui = $data->app->path['root'] . $data->app->path['view'] . 'admin/coreui/';
               <thead>
                 <tr>
                   <th>№</th>
+                  <th>Sort</th>
                   <th>Название</th>
                   <th>Ссылка</th>
                   <th>Артикул</th>
+                  <th>Публикация</th>
                   <th>Действие</th>
                 </tr>
               </thead>
@@ -52,13 +57,15 @@ $coreui = $data->app->path['root'] . $data->app->path['view'] . 'admin/coreui/';
                     $format = '
                       <tr>
                         <td>%1$s</td>
-                        <td><a href="%2$s">%3$s</a></td>
                         <td>%4$s</td>
+                        <td><a href="%2$s">%3$s</a></td>
                         <td>%5$s</td>
                         <td>%6$s</td>
+                        <td>%7$s</td>
+                        <td>%8$s</td>
                       </tr>';
 
-                    $rows .= sprintf($format, $value->id, $href, $value->name, $value->url, $value->art, $controls);
+                    $rows .= sprintf($format, $value->id, $href, $value->name, $value->sort, $value->url, $value->art, $value->publish, $controls);
                   }
             
                   echo $rows;

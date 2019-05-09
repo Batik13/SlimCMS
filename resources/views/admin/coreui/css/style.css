@@ -1,4 +1,6 @@
 @charset "UTF-8";
+
+
 /*!
  * CoreUI - Open Source Dashboard UI Kit
  * @version v2.1.7
@@ -15223,6 +15225,9 @@ body {
   opacity: .8;
   transition: all .3s
 }
+#dataTables p {
+  margin-bottom: 0;
+}
 #dataTables td a p {
   display: inline-block;
 }
@@ -15230,3 +15235,59 @@ body {
   max-width: 70px;
 }
 
+#dataTables  img[alt="thumbnail"] {
+  max-width: 150px;
+}
+
+.note-editable img[alt="thumbnail"] {
+  max-width: 150px;
+  margin: 10px;
+}
+
+.main {
+  background: #fff;
+}
+
+.thumbnail {
+  display: inline-block;
+  padding: 4px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-transition: border .2s ease-in-out;
+  -o-transition: border .2s ease-in-out;
+  transition: border .2s ease-in-out;
+  height: 65px;
+}
+
+.selected-img {
+  background-color: #5CB85C;
+}
+
+.container-scroll {
+  overflow-y: scroll;
+  height: auto;
+  max-height: 560px;
+}
+
+.form-group.note-group-image-url {
+  display: none;
+}
+
+.img-item {
+  display: inline-block;
+  margin: 6px;
+  position: relative;
+  padding-bottom: 15px;
+  overflow: hidden;
+}
+
+.img-item i{
+  position: absolute;
+  bottom: -2px;
+  left: 5px;
+  display: block;
+  font-size: 10px;
+  font-style: normal;
+}

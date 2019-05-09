@@ -43,14 +43,14 @@ class AdminOptionsController extends Controller {
     
     try {
       $element = Option::create([
-        'namespace' => $request->getParam('namespace'),
-        'tab' => $request->getParam('tab'),
-        'name' => $request->getParam('name'),
-        'description' => $request->getParam('description'),
-        'value' => $request->getParam('value'),
-        'type' => $request->getParam('type'),
-        'code' => $request->getParam('code'),
-        'values' => $request->getParam('values'),
+        'namespace' => htmlspecialchars($request->getParam('namespace')),
+        'tab' => htmlspecialchars($request->getParam('tab')),
+        'name' => htmlspecialchars($request->getParam('name')),
+        'description' => htmlspecialchars($request->getParam('description')),
+        'value' => htmlspecialchars($request->getParam('value')),
+        'type' => htmlspecialchars($request->getParam('type')),
+        'code' => htmlspecialchars($request->getParam('code')),
+        'values' => htmlspecialchars($request->getParam('values')),
       ]);
       
     } catch (QueryException $e) {
@@ -95,14 +95,14 @@ class AdminOptionsController extends Controller {
     try {
       Option::find($argument)
         ->update([
-          'namespace' => $request->getParam('namespace'),
-          'tab' => $request->getParam('tab'),
-          'name' => $request->getParam('name'),
-          'description' => $request->getParam('description'),
-          'value' => $request->getParam('value'),
-          'type' => $request->getParam('type'),
-          'code' => $request->getParam('code'),
-          'values' => $request->getParam('values'),
+          'namespace' => htmlspecialchars($request->getParam('namespace')),
+          'tab' => htmlspecialchars($request->getParam('tab')),
+          'name' => htmlspecialchars($request->getParam('name')),
+          'description' => htmlspecialchars($request->getParam('description')),
+          'value' => htmlspecialchars($request->getParam('value')),
+          'type' => htmlspecialchars($request->getParam('type')),
+          'code' => htmlspecialchars($request->getParam('code')),
+          'values' => htmlspecialchars($request->getParam('values')),
         ]);
         
     } catch (QueryException $e) {
